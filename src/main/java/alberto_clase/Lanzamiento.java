@@ -68,7 +68,7 @@ public class Lanzamiento implements ActionListener {
         BufferedImage iconoBuffeado = null;
         double unidad = 0;
         try {
-            iconoBuffeado = ImageIO.read(getClass().getResource("pajaro.png"));
+            iconoBuffeado = ImageIO.read(getClass().getResource("/pajaro.png"));
         } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -125,33 +125,24 @@ public class Lanzamiento implements ActionListener {
                 pajaro.velocidadX = (int) (pajaro.velocidadX + troncoActual.velocidadX) /2;
                 troncoActual.velocidadX = (int) (pajaro.velocidadX*1.2 );
             }
-
-            for (int j = i + 1; j < troncos.size(); j++) { // CHECKEA COLISION
-
-                otroTronco = troncos.get(j);
-
-       
-                Rectangle bordesOtro = otroTronco.getBounds();
-                
-                if(troncoActual.getBounds().intersectsLine(new Line2D.Double(bordesOtro.getMinX()+10,bordesOtro.getMaxY()-5, bordesOtro.getMinX()+10,bordesOtro.getMinY()+5))  //golpear troncos
-                || troncoActual.getBounds().intersectsLine(new Line2D.Double(bordesOtro.getMaxX()+10,bordesOtro.getMaxY()-5, bordesOtro.getMaxX()+10,bordesOtro.getMinY()+5))){
-                    otroTronco.velocidadX = (int) (troncoActual.velocidadX);
-                    troncoActual.velocidadX = -(troncoActual.velocidadX / 4);
-                }
-               
             
+            for (int j = i + 1; j < troncos.size(); j++) { // CHECKEA COLISION
+                
+                otroTronco = troncos.get(j);
+                Rectangle bordesOtro = otroTronco.getBounds();
 
-                if (troncoActual.getBounds().intersectsLine(new Line2D.Double(bordesOtro.getMinX()+1,bordesOtro.getMinY()+2,bordesOtro.getMaxX()-1,bordesOtro.getMinY()+2)) ){ //APILAR TRONCOS
+                if (troncoActual.getBounds().intersectsLine(new Line2D.Double(bordesOtro.getMinX(),bordesOtro.getMinY()+1,bordesOtro.getMaxX(),bordesOtro.getMinY()+1)) ){ //APILAR TRONCOS
                     if(controlRoce){
                         troncoActual.velocidadX = (int)(troncoActual.velocidadX/1.0005);
                     }                                              
                     troncoActual.velocidadY = -1;
                 }
-               
-
-                
-                
-
+       
+                if(troncoActual.getBounds().intersectsLine(new Line2D.Double(bordesOtro.getMinX(),bordesOtro.getMaxY()-2, bordesOtro.getMinX()+2,bordesOtro.getMinY()+2))  //golpear troncos
+                || troncoActual.getBounds().intersectsLine(new Line2D.Double(bordesOtro.getMaxX(),bordesOtro.getMaxY()-2, bordesOtro.getMaxX()-2,bordesOtro.getMinY()+2))){
+                    otroTronco.velocidadX = (int) (troncoActual.velocidadX);
+                    troncoActual.velocidadX = -(troncoActual.velocidadX / 4);
+                }
 
             }
             if (troncosQuietos == troncos.size() && pajaroQuieto) {
