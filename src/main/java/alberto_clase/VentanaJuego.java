@@ -1,14 +1,11 @@
 package alberto_clase;
 
-import java.awt.Dimension;
 import java.awt.Point;
-import java.awt.Rectangle;
 import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.border.Border;
 
 public class VentanaJuego extends JFrame {
     
@@ -18,6 +15,7 @@ public class VentanaJuego extends JFrame {
     Double sueloHitbox ;
     ArrayList<Troncos> troncos;
     JLabel fondo;
+    ArrayList<Cerdo> cerdos;
 
     public VentanaJuego(){
         super("AngryBirds");
@@ -47,12 +45,12 @@ public class VentanaJuego extends JFrame {
         this.add(suelo);
         troncos = new ArrayList<>();
 
-     
+        
 
         
         for (int i = 0; i < 5; i++) {
             for (int j = 0; j < i-2; j++) {
-                troncos.add(new Troncos(new Point(800+i*50,(int)(sueloHitbox-125*2))));
+                troncos.add(new Troncos(new Point(800+i*60,(int)(sueloHitbox-125*2))));
             }
             troncos.add(new Troncos(new Point(800+i*50,(int)(sueloHitbox-125))));
         }
@@ -60,8 +58,11 @@ public class VentanaJuego extends JFrame {
 
         for (int i = 0; i < troncos.size(); i++) {
             this.add(troncos.get(i));
-        }    
-
+        } 
+        
+        cerdos = new ArrayList<>();
+        cerdos.add(new Cerdo(new Point(troncos.get(2).getLocation()),1));
+        this.add(cerdos.get(0));
 
 
 

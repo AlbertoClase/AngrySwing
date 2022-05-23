@@ -11,13 +11,14 @@ public class Pajaro extends Base {
     VentanaJuego ventana;
 
     public Pajaro(VentanaJuego ventana){
-        super(new ImageIcon("src\\main\\resources\\pajaro.png"));
+        super();
+        this.setIcon(new ImageIcon(getClass().getResource("/pajaro.png")));
         this.ventana = ventana;
         
     }
 
     public void colocar(){
         Rectangle tamañoVentana = ventana.getBounds();
-        this.setLocation(50,(int)ventana.suelo.getBounds().getMinY()-70);
+        this.setLocation(50,(int)ventana.suelo.getBounds().getMinY()-this.getHeight());
     }
 }
