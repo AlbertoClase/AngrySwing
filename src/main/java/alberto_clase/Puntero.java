@@ -59,7 +59,7 @@ public class Puntero extends JLabel{
             if(grados>-1.5708){ //SON 90 GRADOS
                 grados-=0.0174533;
                 try {
-                    imagenCambiada = rotate(ImageIO.read(getClass().getResource("puntero.png")), grados);
+                    imagenCambiada = rotate(ImageIO.read(getClass().getResource("/puntero.png")), grados);
                 } catch (IOException e1) {
                     // TODO Auto-generated catch block
                     e1.printStackTrace();
@@ -70,7 +70,7 @@ public class Puntero extends JLabel{
             if(grados<0){ //SON 0 GRADOS
                 grados+=0.0174533;
                 try {
-                    imagenCambiada = rotate(ImageIO.read(getClass().getResource("puntero.png")), grados);
+                    imagenCambiada = rotate(ImageIO.read(getClass().getResource("/puntero.png")), grados);
                 } catch (IOException e1) {
                     // TODO Auto-generated catch block
                     e1.printStackTrace();
