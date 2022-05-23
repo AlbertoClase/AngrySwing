@@ -7,12 +7,12 @@ import javax.swing.ImageIcon;
 public class Cerdo extends Base{
 
     int nVidas;
+    boolean muerto=false;
 
     public Cerdo(Point localizacion,int nVidas) {
         super();
         this.nVidas = nVidas;
         crearCerdo();
-        this.setIcon(new ImageIcon(getClass().getResource("/cerdo.png")));
         //TODO Auto-generated constructor stub
         this.setLocation((int)localizacion.getX(),(int)localizacion.getY()-this.getHeight());
     }
