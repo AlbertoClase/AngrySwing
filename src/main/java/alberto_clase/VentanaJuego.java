@@ -22,12 +22,12 @@ public class VentanaJuego extends JFrame {
     public VentanaJuego(){
         super("AngryBirds");
         this.setLayout(null);
-        fondo =new JLabel(new ImageIcon(getClass().getResource("fondo.png")));
+        fondo =new JLabel(new ImageIcon(getClass().getResource("/fondo.png")));
         fondo.setSize(1400,700);
         fondo.setLocation(0,0);
         this.pack();
        
-        suelo = new JLabel(new ImageIcon(getClass().getResource("hierba.png")));
+        suelo = new JLabel(new ImageIcon(getClass().getResource("/hierba.png")));
         suelo.setLocation(-5,530);
         suelo.setSize(1400,137);
         sueloHitbox = suelo.getBounds().getMinY()+2;
@@ -52,9 +52,9 @@ public class VentanaJuego extends JFrame {
         
         for (int i = 0; i < 5; i++) {
             for (int j = 0; j < i-2; j++) {
-                troncos.add(new Troncos(new Point(800+i*50,(int)(sueloHitbox)-125*2)));
+                troncos.add(new Troncos(new Point(800+i*50,(int)(sueloHitbox-125*2))));
             }
-            troncos.add(new Troncos(new Point(800+i*50,sueloHitbox-125)));
+            troncos.add(new Troncos(new Point(800+i*50,(int)(sueloHitbox-125))));
         }
 
 

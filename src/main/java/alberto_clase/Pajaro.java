@@ -11,7 +11,7 @@ public class Pajaro extends Base {
     VentanaJuego ventana;
 
     public Pajaro(VentanaJuego ventana){
-        super(new ImageIcon("C:\\Users\\AlbertoG\\Desktop\\Clase\\Programacion\\java\\TercerTrimestre\\angrybirds_swing\\src\\main\\java\\alberto_clase\\pajaro.png"));
+        super(new ImageIcon("src\\main\\resources\\pajaro.png"));
         this.ventana = ventana;
         
     }

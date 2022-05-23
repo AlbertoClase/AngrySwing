@@ -33,7 +33,7 @@ public class Puntero extends JLabel{
 
     public Puntero(Pajaro pajaro){
         super();
-        image = new ImageIcon(getClass().getResource("puntero.png"));
+        image = new ImageIcon(getClass().getResource("/puntero.png"));
         this.setIcon(image);
         pajaroAsociado = pajaro;
         movimiento = new MovimientoPuntero(this);
