@@ -24,7 +24,7 @@ public class ColisionObjeto {
         }
         if(receptor.getClass()==Cerdo.class){
             if(colisionador.velocidadY>2){
-                ((Cerdo)(receptor)).muerto=true;
+                ((Cerdo)(receptor)).quitarVida();
             }
         }
 
@@ -53,7 +53,7 @@ public class ColisionObjeto {
         }
         if(receptor.getClass()==Cerdo.class){
             if(colisionador.velocidadX>2){
-                ((Cerdo)(receptor)).muerto=true;
+                ((Cerdo)(receptor)).quitarVida();
             }
         }
     }

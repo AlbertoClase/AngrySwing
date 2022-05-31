@@ -1,11 +1,15 @@
 package alberto_clase;
 
 import java.awt.Point;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.ImageIcon;
+import javax.swing.Timer;
 
-public class Cerdo extends Base{
+public class Cerdo extends Base implements ActionListener{
 
+    Timer animacion;
     int nVidas;
     boolean muerto=false;
 
@@ -33,5 +37,28 @@ public class Cerdo extends Base{
                 this.setSize(133,144);
             }
         }
+    }
+
+    public void quitarVida(){
+        nVidas-=1;
+
+        if(nVidas==0){
+            muerto=true;
+            morir();
+        }
+    }
+
+    private void morir(){
+        this.setIcon(new ImageIcon(getClass().getResource("/muerte1.png")));
+        animacion = new Timer(500, this);
+        animacion.start();
+        
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        // TODO Auto-generated method stub
+        this.setIcon(null);
+        animacion.stop();
     }
 }

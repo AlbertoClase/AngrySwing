@@ -89,9 +89,8 @@ public class Lanzamiento implements ActionListener {
                 ColisionObjeto.colisionLateral(troncoActual, ventana.cerdos.get(z), controlRoce, 1, 0.7);
                 if(ventana.cerdos.get(z).velocidadX>2||ventana.cerdos.get(z).velocidadX<-2){
                     if(ventana.cerdos.get(z).muerto){
-                        ventana.cerdos.get(z).setIcon(null);
+                        ventana.remove(ventana.cerdos.get(z));
                         ventana.cerdos.remove(z);
-                        System.out.println("eso dueleeh");
                     }
                 }
             }
@@ -159,7 +158,7 @@ public class Lanzamiento implements ActionListener {
         if ((tronco.getBounds().getMaxY() + 1.5 > ventana.sueloHitbox
                 && tronco.getBounds().getMaxY() - 1.5 < ventana.sueloHitbox)
                 || ((tronco.velocidadY < 1 && tronco.velocidadY > -1)
-                        && !(tronco.getBounds().getMaxX() > ventana.sueloHitbox - 30))) { // ESTÁ A RAS DEL SUELO,
+                        && !(tronco.getBounds().getMaxX() > ventana.sueloHitbox - 10))) { // ESTÁ A RAS DEL SUELO,
                                                                                           // NO SALTA Y SOLO ROZA X
             tronco.velocidadY = 0;
             if (controlRoce) {

@@ -56,6 +56,8 @@ public class VentanaJuego extends JFrame {
         } */
         troncos.add(new Troncos(new Point(800,(int)(sueloHitbox-250))));
         troncos.add(new Troncos(new Point(800,(int)(sueloHitbox-125))));
+        troncos.add(new Troncos(new Point(900,(int)(sueloHitbox-250))));
+        troncos.add(new Troncos(new Point(900,(int)(sueloHitbox-125))));
 
 
 
@@ -65,10 +67,10 @@ public class VentanaJuego extends JFrame {
         
         cerdos = new ArrayList<>();
         cerdos.add(new Cerdo(new Point(840,(int)(sueloHitbox+0)),1));
-        this.add(cerdos.get(0));
-
-
-
+        cerdos.add(new Cerdo(new Point(940,(int)(sueloHitbox+0)),2));
+        for (int i = 0; i < cerdos.size(); i++) {
+            this.add(cerdos.get(i));
+        }
 
 
     }
