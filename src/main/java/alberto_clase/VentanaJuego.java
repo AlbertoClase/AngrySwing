@@ -23,6 +23,7 @@ public class VentanaJuego extends JFrame {
         fondo =new JLabel(new ImageIcon(getClass().getResource("/fondo.png")));
         fondo.setSize(1400,700);
         fondo.setLocation(0,0);
+
         this.pack();
        
         suelo = new JLabel(new ImageIcon(getClass().getResource("/hierba.png")));
@@ -31,7 +32,7 @@ public class VentanaJuego extends JFrame {
         sueloHitbox = suelo.getBounds().getMinY()+2;
         
         pajaro = new Pajaro(this);
-        pajaro.setSize(72,70);
+        pajaro.setSize(78,70);
         pajaro.colocar();
         this.add(pajaro); 
         
@@ -67,11 +68,11 @@ public class VentanaJuego extends JFrame {
         
         cerdos = new ArrayList<>();
         cerdos.add(new Cerdo(new Point(840,(int)(sueloHitbox+0)),1));
-        cerdos.add(new Cerdo(new Point(940,(int)(sueloHitbox+0)),2));
+        cerdos.add(new Cerdo(new Point(980,(int)(sueloHitbox+0)),2));
         for (int i = 0; i < cerdos.size(); i++) {
             this.add(cerdos.get(i));
         }
 
-
+        this.add(fondo);
     }
 }

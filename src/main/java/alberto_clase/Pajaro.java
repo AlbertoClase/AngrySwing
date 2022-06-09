@@ -7,12 +7,14 @@ import javax.swing.JLabel;
 
 public class Pajaro extends Base {
     
+
     JLabel pajarito;
     VentanaJuego ventana;
-
+    
     public Pajaro(VentanaJuego ventana){
         super();
-        this.setIcon(new ImageIcon(getClass().getResource("/pajaro.png")));
+        imagen = "/pajaro.png";
+        this.setIcon(new ImageIcon(getClass().getResource(imagen)));
         this.ventana = ventana;
         
     }

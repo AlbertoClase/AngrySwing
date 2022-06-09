@@ -1,5 +1,6 @@
 package alberto_clase;
 
+import java.awt.Component;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -43,25 +44,22 @@ public class Lanzamiento implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         // TOD O Auto-generated method stub
-        double pajaroVX;
-        double pajaroVY;
+
         tiempo += fps.getDelay();
 
         if (e.getSource() == fps) {
 
-            if (!(pajaro.velocidadX > 1.0 || pajaro.velocidadX < -1.0)
-                    && !(pajaro.velocidadY < -1.0 || pajaro.velocidadY > 1.0)
-                    && pajaro.getBounds().getMaxY() > ventana.sueloHitbox - 2 && empezado == true) { // SE QUEDÓ QUIETO
-                                                                                                     // EL PÁJARO
-                pajaroQuieto = true;
-            } else {
-                moverPajaro();
+            if(!pajaroQuieto){
+                moverPed(pajaro);
             }
             colisiones();
         }
         empezado = true;
     }
 
+    /**
+     * Gestor de colisiones 
+     */
     private void colisiones() {
         boolean controlRoce = tiempo % (fps.getDelay() * 8) == 0;
         Troncos otroTronco;
@@ -83,15 +81,13 @@ public class Lanzamiento implements ActionListener {
 
             }
 
-            for (int z = 0; z < ventana.cerdos.size(); z++) {
-
+            for (int z = 0; z < ventana.cerdos.size(); z++) {  //Checkea la colisión del cerdo con los troncos
                 ColisionObjeto.colisionCaida(troncoActual, ventana.cerdos.get(z), controlRoce);
                 ColisionObjeto.colisionLateral(troncoActual, ventana.cerdos.get(z), controlRoce, 1, 0.7);
-                if(ventana.cerdos.get(z).velocidadX>2||ventana.cerdos.get(z).velocidadX<-2){
-                    if(ventana.cerdos.get(z).muerto){
-                        ventana.remove(ventana.cerdos.get(z));
-                        ventana.cerdos.remove(z);
-                    }
+
+                if(ventana.cerdos.get(z).velocidadX>1||ventana.cerdos.get(z).velocidadX<-1&&!ventana.cerdos.get(z).muerto){
+                    moverPed(ventana.cerdos.get(z));
+
                 }
             }
 
@@ -100,77 +96,86 @@ public class Lanzamiento implements ActionListener {
                 fps.stop();
             }
 
-            if (troncoActual == troncoActual) {
-                moverTronco(troncoActual); // MUEVE LOS TRONCOS
-            } else {
-                troncosQuietos++;
-            } /*  */
+            moverTronco(troncoActual);
         }
     }
 
-    private void moverPajaro() {
-        double rozamiento;
-        pajaro.velocidadY = pajaro.velocidadY + 1;
-        rotarPajaro();
-        if (pajaro.getBounds().getMaxY() > ventana.sueloHitbox && rebote) {
+    /**
+     * Gestión del movimiento y rebote del pájaro
+     */
+    private void moverPed(Base ped) { 
+        double rozamiento=1.2;
+        ped.velocidadY = ped.velocidadY + 1;
+        
+        if (ped.getBounds().getMaxY() > ventana.sueloHitbox && ped.rebote) { //SI EL ped SOBREPASA EL SUELO Y PUEDE REBOTAR , REBOTA
 
-            pajaro.velocidadY = -(int) (pajaro.velocidadY / 1.4);
+            ped.velocidadY = -(int) (ped.velocidadY / 1.4); 
+            ped.velocidadX = (int) (ped.velocidadX / rozamiento);
 
-            rozamiento = 1.2;
-
-            pajaro.velocidadX = (int) (pajaro.velocidadX / rozamiento);
-
-            if (pajaro.velocidadX < 1 && pajaro.velocidadX > -1) {
-                pajaroQuieto = true;
+            if (ped.velocidadX < 1 && ped.velocidadX > -1) {
+                ped.quieto = true;
             }
-            rebote = false;
+            ped.rebote = false;
         } else {
 
-            rebote = true; // EVITAR REBOTES POR FALLO DE INTERSECT
+            ped.rebote = true; // EVITAR REBOTES POR FALLO DE INTERSECT
         }
-        pajaro.setLocation((int) pajaro.getLocation().getX() + pajaro.velocidadX,
-                (int) pajaro.getLocation().getY() + pajaro.velocidadY);
+        if (!(ped.velocidadX > 1.0 || ped.velocidadX < -1.0)
+                    && !(ped.velocidadY < -1.0 || ped.velocidadY > 1.0)
+                    && ped.getBounds().getMaxY() > ventana.sueloHitbox - 2 && empezado == true) { // SE QUEDÓ QUIETO
+                                                                                                     // EL PÁJARO
+                ped.quieto = true;
+            } 
+        ped.setLocation((int) ped.getLocation().getX() + ped.velocidadX,
+                (int) ped.getLocation().getY() + ped.velocidadY);
+        rotarPed(ped); //ROTACIÓN DE LA IMAGEN
     }
 
-    private void rotarPajaro() {
+    /**
+     * Generador de animación de rotamiento de la imagen del ped
+     */
+    private void rotarPed(Base ped) {
+        System.out.println();
         BufferedImage iconoBuffeado = null;
         double unidad = 0;
         try {
-            iconoBuffeado = ImageIO.read(getClass().getResource("/pajaro.png"));
+            iconoBuffeado = ImageIO.read(getClass().getResource(ped.imagen));
         } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
 
-        gradosGirados += pajaro.velocidadX / 28.0;
-        if (pajaro.velocidadX / 28.0 < 0.05) {
-            gradosGirados += 0.05;
-        }
 
-        ImageIcon imagenRotada = new ImageIcon(Puntero.rotate(iconoBuffeado, gradosGirados));
-        pajaro.setIcon(imagenRotada);
+        ped.gradosGirados += ped.velocidadX / 28.0;
+        if (ped.velocidadX / 28.0 < 0.05) {
+            ped.gradosGirados += 0.05;
+        }
+        System.out.println(ped.gradosGirados);
+        ped.setIcon(new ImageIcon(Puntero.rotate(iconoBuffeado, ped.gradosGirados)));
     }
 
+
+    /**
+     * Controla el movimiento de los troncos, su roce con el suelo o si está encima de un tronco que se quede parado
+     * @param tronco Tronco al que comprobar
+     */
     private void moverTronco(Troncos tronco) {
         boolean controlRoce = tiempo % (fps.getDelay() * 4) == 0; // EL MULTIPLICADOR INDICA EL NÚMERO DE VECES POR EL
-                                                                  // QUE SE DIVIDE EL ROCE // YA QUE NO SE PUEDE
-                                                                  // CONTROLAR A TRAVÉS DE DECIMALES CORRECTAMENTE
-        if ((tronco.getBounds().getMaxY() + 1.5 > ventana.sueloHitbox
-                && tronco.getBounds().getMaxY() - 1.5 < ventana.sueloHitbox)
-                || ((tronco.velocidadY < 1 && tronco.velocidadY > -1)
-                        && !(tronco.getBounds().getMaxX() > ventana.sueloHitbox - 10))) { // ESTÁ A RAS DEL SUELO,
+                                                                  // QUE SE DIVIDE EL ROCE YA QUE NO SE PUEDE CONTROLAR A TRAVÉS DE DECIMALES CORRECTAMENTE
+                                                                   
+
+        if ((tronco.getBounds().getMaxY() + 1.5 > ventana.sueloHitbox  //CONTACTO CON EL SUELO
+                && tronco.getBounds().getMaxY() - 1.5 < ventana.sueloHitbox)) { // ESTÁ A RAS DEL SUELO,
                                                                                           // NO SALTA Y SOLO ROZA X
-            tronco.velocidadY = 0;
-            if (controlRoce) {
+            tronco.velocidadY = 0; //PARA QUE DEJE DE CAER
+            if (controlRoce) {  //ROZAMIENTO CON EL SUELO DISMINUYA LA VELOCIDAD
                 tronco.velocidadX = (int) (tronco.velocidadX / 1.0005);
             }
         } else {
-            if (tronco.getBounds().getMaxY() > ventana.sueloHitbox) { // EVITAR CAIDA DEBAJO DEL MAPA
-
-                tronco.setLocation((int) tronco.getBounds().getX(),
-                        (int) tronco.getLocation().getY() - tronco.velocidadY);
-                tronco.velocidadY = tronco.velocidadY / 2;
-
+            if (tronco.getBounds().getMaxY() > ventana.sueloHitbox) { // EVITAR CAIDA DEBAJO DEL MAPA Y REBOTE
+                tronco.setLocation((int) tronco.getBounds().getX(), 
+                        (int) tronco.getLocation().getY() - tronco.velocidadY); // LO COLOCA POR ENCIMA DEL SUELO, SINO VOLVERÁ A DETECTAR LA COLISION Y HARÁ BUCLE INFINITO
+                tronco.velocidadY = tronco.velocidadY / 2; //INDICE DE REBOTE-> VELOCIDAD / 2
             } else {
                 tronco.velocidadY += 1; // ESTÁ EN CAIDA <- GRAVEDAD
             }

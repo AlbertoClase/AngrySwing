@@ -20,13 +20,19 @@ public class ColisionObjeto {
             if (controlRoce) {
                 colisionador.velocidadX = (int) (colisionador.velocidadX / 1.0005);
             }
-            colisionador.velocidadY = -1;
-        }
-        if(receptor.getClass()==Cerdo.class){
-            if(colisionador.velocidadY>2){
-                ((Cerdo)(receptor)).quitarVida();
+
+            if(receptor.getClass()==Cerdo.class){ //SI EL TRONCO CAE CON FUERZA ENCIMA DEL CERDO LO MATA
+                if(colisionador.velocidadY>2){
+                    ((Cerdo)(receptor)).quitarVida();
+                }
+                if(!((Cerdo)(receptor)).muerto){
+                    colisionador.velocidadY = -1;
+                }
+            }else{
+                colisionador.velocidadY = -1;
             }
         }
+        
 
     }
     
@@ -50,10 +56,10 @@ public class ColisionObjeto {
                         bordesReceptor.getMaxY() - 2, bordesReceptor.getMaxX() - 2, bordesReceptor.getMinY() + 2))) {
             receptor.velocidadX = (int) (colisionador.velocidadX*fuerza);
             colisionador.velocidadX = (colisionador.velocidadX / peso);
-        }
-        if(receptor.getClass()==Cerdo.class){
-            if(colisionador.velocidadX>2){
-                ((Cerdo)(receptor)).quitarVida();
+            if(receptor.getClass()==Cerdo.class){ //SI EL TRONCO LE DA AL CERDO CON CIERTA FUERZXA LO MATA
+                if(colisionador.velocidadX>2){
+                    ((Cerdo)(receptor)).quitarVida();
+                }
             }
         }
     }

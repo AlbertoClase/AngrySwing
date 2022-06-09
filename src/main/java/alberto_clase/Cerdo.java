@@ -9,6 +9,8 @@ import javax.swing.Timer;
 
 public class Cerdo extends Base implements ActionListener{
 
+
+    String imangen;
     Timer animacion;
     int nVidas;
     boolean muerto=false;
@@ -25,9 +27,9 @@ public class Cerdo extends Base implements ActionListener{
         if(nVidas<1||nVidas>3){
             nVidas=1;
         }
-        String cualImagen = "/cerdo"+nVidas+".png";
-        System.out.println(cualImagen);
-        this.setIcon(new ImageIcon(getClass().getResource(cualImagen)));
+        imagen = "/cerdo"+nVidas+".png";
+        System.out.println(imagen);
+        this.setIcon(new ImageIcon(getClass().getResource(imagen)));
         if(nVidas==1){
             this.setSize(84, 81);
         } else{
