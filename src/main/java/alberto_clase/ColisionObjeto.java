@@ -1,5 +1,6 @@
 package alberto_clase;
 
+import java.awt.Color;
 import java.awt.Rectangle;
 import java.awt.geom.Line2D;
 
@@ -24,8 +25,9 @@ public class ColisionObjeto {
             if(receptor.getClass()==Cerdo.class){ //SI EL TRONCO CAE CON FUERZA ENCIMA DEL CERDO LO MATA
                 if(colisionador.velocidadY>2){
                     ((Cerdo)(receptor)).quitarVida();
+                  
                 }
-                if(!((Cerdo)(receptor)).muerto){
+                if(!((Cerdo)(receptor)).muerto){ //SI EL CERDO TA MUERTO CAE IGUALMENTE EL TRONCO
                     colisionador.velocidadY = -1;
                 }
             }else{
@@ -56,8 +58,10 @@ public class ColisionObjeto {
                         bordesReceptor.getMaxY() - 2, bordesReceptor.getMaxX() - 2, bordesReceptor.getMinY() + 2))) {
             receptor.velocidadX = (int) (colisionador.velocidadX*fuerza);
             colisionador.velocidadX = (colisionador.velocidadX / peso);
-            if(receptor.getClass()==Cerdo.class){ //SI EL TRONCO LE DA AL CERDO CON CIERTA FUERZXA LO MATA
-                if(colisionador.velocidadX>2){
+
+            if(receptor.getClass()==Cerdo.class){ //SI EL TRONCO LE DA AL CERDO CON CIERTA FUERZA LO MATA
+                if(colisionador.velocidadX>3){
+                    ((Troncos)(colisionador)).romper();
                     ((Cerdo)(receptor)).quitarVida();
                 }
             }

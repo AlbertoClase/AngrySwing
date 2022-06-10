@@ -18,4 +18,5 @@ public class Base extends JLabel{
     public Base(Icon imagen){
         super(imagen);
     }
+
 }

@@ -85,7 +85,7 @@ public class Lanzamiento implements ActionListener {
                 ColisionObjeto.colisionCaida(troncoActual, ventana.cerdos.get(z), controlRoce);
                 ColisionObjeto.colisionLateral(troncoActual, ventana.cerdos.get(z), controlRoce, 1, 0.7);
 
-                if(ventana.cerdos.get(z).velocidadX>1||ventana.cerdos.get(z).velocidadX<-1&&!ventana.cerdos.get(z).muerto){
+                if((ventana.cerdos.get(z).velocidadX>1||ventana.cerdos.get(z).velocidadX<-1)&&!ventana.cerdos.get(z).muerto){
                     moverPed(ventana.cerdos.get(z));
 
                 }

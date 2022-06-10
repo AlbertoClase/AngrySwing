@@ -52,6 +52,7 @@ public class Cerdo extends Base implements ActionListener{
 
     private void morir(){
         this.setIcon(new ImageIcon(getClass().getResource("/muerte1.png")));
+        
         animacion = new Timer(500, this);
         animacion.start();
         
